@@ -11,11 +11,14 @@ HINSTANCE hInst;                                // current instance
 WCHAR szTitle[MAX_LOADSTRING] ;                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 
+
 // Forward declarations of functions included in this code module:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+int wndWidth = 1000;
+int wndHeight = 500;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -40,7 +43,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_KEYS));
 
-    MSG msg;
+    MSG msg = {0};
 
     // Main message loop:
     while (GetMessage(&msg, nullptr, 0, 0))
@@ -75,9 +78,9 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hInstance      = hInstance;
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_KEYS));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
+    wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+3);
     wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_KEYS);
-    wcex.lpszClassName  = szWindowClass;
+    wcex.lpszClassName  = L"WindowClass";
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
     return RegisterClassExW(&wcex);
@@ -108,8 +111,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    // NULL: this application dows not have a menu bar
    // hInstance: the first parameter from WinMain
    // NULL: not used in this application
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, CW_USEDEFAULT, 1000,500, 0, nullptr, nullptr, hInstance, nullptr);
+   HWND hWnd = CreateWindowW(L"WindowClass", L"Typing Game", WS_OVERLAPPEDWINDOW | WS_VISIBLE,
+       CW_USEDEFAULT, CW_USEDEFAULT, wndWidth,wndHeight, nullptr, NULL, hInstance, nullptr);
 
    if (!hWnd)
    {
@@ -160,7 +163,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: Add any drawing code that uses hdc here...
             TextOut(hdc,
-                5, 5,
+                200, 5,
                 greeting, _tcslen(greeting));
 
             EndPaint(hWnd, &ps);
@@ -170,7 +173,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         PostQuitMessage(0);
         break;
     default:
-        return DefWindowProc(hWnd, message, wParam, lParam);
+        return DefWindowProc(hWnd, message, wParam, lParam);//handles every other event
     }
     return 0;
 }

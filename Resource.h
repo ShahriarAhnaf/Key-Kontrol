@@ -2,15 +2,17 @@
 // Microsoft Visual C++ generated include file.
 // Used by Keys.rc
 
-#define IDS_APP_TITLE			103
+
+//Theses are Windows Default Win32 Symbols
+#define IDS_APP_TITLE			103 // current application name
 
 #define IDR_MAINFRAME			128
-#define IDD_KEYS_DIALOG	102
+#define IDD_KEYS_DIALOG	        102
 #define IDD_ABOUTBOX			103
 #define IDM_ABOUT				104
 #define IDM_EXIT				105
 #define IDI_KEYS			107
-#define IDI_SMALL				108
+#define IDI_SMALL				108 //current project icon
 #define IDC_KEYS			109
 #define IDC_MYICON				2
 #ifndef IDC_STATIC
